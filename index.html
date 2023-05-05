@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CRUD</title>
+    <link rel="stylesheet" href="style.css" />
+    <style></style>
+  </head>
+  <body>
+    <header>
+      <h1>National Geographix</h1>
+    </header>
+    <div class="create-btn">
+      <button class="create">Create new animal</button>
+    </div>
+    <section class="tools-grid">
+      
+        <label for="select-sort-by"></label>
+          Sort by:
+          <select id="select-sort-by">
+            <option value="" selected>Not selected</option>
+            <option value="title">Name</option>
+            <option value="body">Description</option>
+            <option value="food">Favorite Food</option>
+          </select>
+        </label>
+      
+      
+        <label for="input-search">Search:</label>
+        <input type="search" id="input-search" placeholder="Search animal" />
+
+        <label for="filter">Filter:</label>
+        <select id="filter">
+          <option value="" selected>Not selected</option>
+          <option value="Ground">Ground</option>
+          <option value="water">Water</option>
+          <option value="flying">Flying</option>
+        </select>
+      
+    </section>
+    <section id="posts" class="grid-container"></section>
+    <section id="posts" class="grid-container"></section>
+    <dialog id="postDetails"></dialog>
+    <dialog id="create-form"></dialog>
+    <dialog id="update-form"></dialog>
+  </body>
+  <script src="js/script.js" type="module"></script>
+</html>
