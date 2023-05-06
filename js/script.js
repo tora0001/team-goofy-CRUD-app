@@ -8,6 +8,7 @@ async function initApp() {
   document.querySelector(".create").addEventListener("click", createPostClicked);
   document.querySelector("#input-search").addEventListener("keyup", inputSearchChanged);
   document.querySelector("#input-search").addEventListener("search", inputSearchChanged);
+  // document.querySelector("#filter").addEventListener("change", filterAnimals);
 }
 async function updatePostsGrid() {
   const posts = await getPosts();
@@ -190,3 +191,23 @@ async function sortByChanged() {
 
   showPosts(posts);
 }
+
+// async function filterAnimals() {
+//   const filterSelect = document.querySelector("#filter").value;
+//   const flyingSelect = document.querySelector("#flying").value;
+//   const waterSelect = document.querySelector("#water").value;
+//   const posts = await getPosts();
+
+//   if (filterSelect === "Ground" && flyingSelect === "no" && waterSelect === "no") {
+
+//   } else if (filterSelect.value === "water") {
+//     waterSelect.style.display = "block";
+//   } else if (filterSelect.value === "flying") {
+//     waterSelect.style.display = "none";
+//     flyingSelect.style.display = "block";
+//   } else {
+//     waterSelect.style.display = "none";
+//     flyingSelect.style.display = "none";
+//   }
+//   showPosts(posts);
+// }
