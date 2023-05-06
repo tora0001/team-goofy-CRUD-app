@@ -13,18 +13,18 @@ async function deletePost(id) {
   });
   return response;
 }
-async function submitUpdatedPost(id, title, body, image, food, flying, water) {
+async function submitUpdatedPost(id, title, body, image, food, living) {
   console.log(id);
-  const postToUpdate = { id, title, body, image, food, flying, water };
+  const postToUpdate = { id, title, body, image, food, living };
   const postAsJson = JSON.stringify(postToUpdate);
   const url = `${endpoint}/posts/${id}.json`;
 
   const response = await fetch(url, { method: "PUT", body: postAsJson });
   return response;
 }
-async function submitNewPost(image, title, body, food, flying, water) {
+async function submitNewPost(image, title, body, food, living) {
   console.log("submitNewPost is running");
-  const newPost = { image, title, body, food, flying, water };
+  const newPost = { image, title, body, food, living };
   const postAsJson = JSON.stringify(newPost);
   const response = await fetch(`${endpoint}/posts.json`, { method: "POST", body: postAsJson });
   return response;

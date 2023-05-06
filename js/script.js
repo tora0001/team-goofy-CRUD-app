@@ -8,7 +8,7 @@ async function initApp() {
   document.querySelector(".create").addEventListener("click", createPostClicked);
   document.querySelector("#input-search").addEventListener("keyup", inputSearchChanged);
   document.querySelector("#input-search").addEventListener("search", inputSearchChanged);
-  // document.querySelector("#filter").addEventListener("change", filterAnimals);
+  document.querySelector("#filter").addEventListener("change", filterAnimals);
 }
 async function updatePostsGrid() {
   const posts = await getPosts();
@@ -58,15 +58,11 @@ function updateClicked(post) {
       <input type="text" id="food" name="food" maxlength="25"/>
       <br>
       <br>
-      <label for="flying">Can it fly?</label>
-      <select id="flying">
-            <option value="yes">Yes</option>
-            <option value="no">No</option>
-          </select>
-          <label for="water">Does it live in the water?</label>
-      <select id="water">
-            <option value="yes">Yes</option>
-            <option value="no">No</option>
+      <label for="living">Where does the animal live?</label>
+      <select id="living">
+            <option value="flying">in the air</option>
+            <option value="land">on land</option>
+            <option value="water">in the Water</option>
           </select>
       <br>
       <button>Update</button>
@@ -78,8 +74,7 @@ function updateClicked(post) {
   document.querySelector("#title").value = post.title;
   document.querySelector("#description").value = post.body;
   document.querySelector("#food").value = post.food;
-  document.querySelector("#flying").value = post.flying;
-  document.querySelector("#water").value = post.water;
+  document.querySelector("#living").value = post.living;
   document.querySelector("#update-form").addEventListener("submit", () => prepareUpdatedPostData(post));
   document.querySelector("#btn-cancel").addEventListener("click", () => {
     document.querySelector("#update-form").close();
@@ -93,8 +88,7 @@ function postClicked(post) {
 <img src="${post.image}" class="center">
 <p>${post.body}</p>
 <p>Favorite food: ${post.food}</p>
-<p>Can it fly? ${post.flying}</p>
-<p>Does it live in the water? ${post.water}</p>
+<p>This is a ${post.living} animal</p>
     <form method="dialog">
 		<button id ="closeModalButton">Close</button>
     </form>`;
@@ -108,10 +102,9 @@ async function prepareUpdatedPostData(post) {
   const title = document.querySelector("#title").value;
   const body = document.querySelector("#description").value;
   const food = document.querySelector("#food").value;
-  const flying = document.querySelector("#flying").value;
-  const water = document.querySelector("#water").value;
+  const living = document.querySelector("#living").value;
 
-  const response = await submitUpdatedPost(post.id, title, body, image, food, flying, water);
+  const response = await submitUpdatedPost(post.id, title, body, image, food, living);
   if (response.ok) {
     document.querySelector("#update-form").close();
     updatePostsGrid();
@@ -135,18 +128,14 @@ function createPostClicked(event) {
       <input type="text" id="food" name="food" maxlength="25" placeholder="Insert food here" />
       <br>
       <br>
-      <label for="flying">Can it fly?</label>
-      <select id="flying">
+      <label for="living">Where does the animal live?</label>
+      <select id="living">
             <option value="" selected>Not selected</option>
-            <option value="yes">Yes</option>
-            <option value="no">No</option>
+            <option value="flying">in the air</option>
+            <option value="land">on land</option>
+            <option value="water">in the water</option>
           </select>
-          <label for="water">Does it live in the water?</label>
-      <select id="water">
-            <option value="" selected>Not selected</option>
-            <option value="yes">Yes</option>
-            <option value="no">No</option>
-          </select>
+          
       <br>
       <button>Submit</button>
       <input type="button" id="btn-cancel" value="Cancel">
@@ -163,9 +152,8 @@ async function prepareNewPostData() {
   const title = document.querySelector("#title").value;
   const body = document.querySelector("#description").value;
   const food = document.querySelector("#food").value;
-  const flying = document.querySelector("#flying").value;
-  const water = document.querySelector("#water").value;
-  const response = await submitNewPost(image, title, body, food, flying, water);
+  const living = document.querySelector("#living").value;
+  const response = await submitNewPost(image, title, body, food, living);
   if (response.ok) {
     updatePostsGrid();
     document.querySelector("#create-form").close();
@@ -192,22 +180,17 @@ async function sortByChanged() {
   showPosts(posts);
 }
 
-// async function filterAnimals() {
-//   const filterSelect = document.querySelector("#filter").value;
-//   const flyingSelect = document.querySelector("#flying").value;
-//   const waterSelect = document.querySelector("#water").value;
-//   const posts = await getPosts();
+async function filterAnimals() {
+  const filter = document.querySelector("#filter").value;
+  let posts = await getPosts();
 
-//   if (filterSelect === "Ground" && flyingSelect === "no" && waterSelect === "no") {
+  if (filter === "land") {
+    posts = posts.filter((post) => post.living === "land");
+  } else if (filter === "water") {
+    posts = posts.filter((post) => post.living === "water");
+  } else if (filter === "flying") {
+    posts = posts.filter((post) => post.living === "flying");
+  }
 
-//   } else if (filterSelect.value === "water") {
-//     waterSelect.style.display = "block";
-//   } else if (filterSelect.value === "flying") {
-//     waterSelect.style.display = "none";
-//     flyingSelect.style.display = "block";
-//   } else {
-//     waterSelect.style.display = "none";
-//     flyingSelect.style.display = "none";
-//   }
-//   showPosts(posts);
-// }
+  showPosts(posts);
+}
